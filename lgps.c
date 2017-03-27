@@ -146,12 +146,12 @@ lgps_read (lua_State *L)
     lua_createtable (L, 0, 0);
     for (i = 0; i < ud->satellites_used && i < MAXCHANNELS; i++) {
       lua_pushinteger (L, i + 1);
-      lua_pushinteger (L, ud->used[i]);
+      lua_pushinteger (L, ud->skyview[i].used);
       lua_settable (L, -3);
     }
   }
   lua_settable (L, -3);
-  
+
   lua_pushliteral (L, "dop");
   {
     lua_createtable (L, 0, 0);
@@ -175,7 +175,7 @@ lgps_read (lua_State *L)
     lua_createtable (L, 0, 0);
     for (i = 0; i < ud->satellites_visible && i < MAXCHANNELS; i++) {
       lua_pushinteger (L, i + 1);
-      lua_pushinteger (L, ud->PRN[i]);
+      lua_pushinteger (L, ud->skyview[i].PRN);
       lua_settable (L, -3);
     }
   }
@@ -186,7 +186,7 @@ lgps_read (lua_State *L)
     lua_createtable (L, 0, 0);
     for (i = 0; i < ud->satellites_visible && i < MAXCHANNELS; i++) {
       lua_pushinteger (L, i + 1);
-      lua_pushinteger (L, ud->elevation[i]);
+      lua_pushinteger (L, ud->skyview[i].elevation);
       lua_settable (L, -3);
     }
   }
@@ -197,7 +197,7 @@ lgps_read (lua_State *L)
     lua_createtable (L, 0, 0);
     for (i = 0; i < ud->satellites_visible && i < MAXCHANNELS; i++) {
       lua_pushinteger (L, i + 1);
-      lua_pushinteger (L, ud->azimuth[i]);
+      lua_pushinteger (L, ud->skyview[i].azimuth);
       lua_settable (L, -3);
     }
   }
@@ -208,7 +208,7 @@ lgps_read (lua_State *L)
     lua_createtable (L, 0, 0);
     for (i = 0; i < ud->satellites_visible && i < MAXCHANNELS; i++) {
       lua_pushinteger (L, i + 1);
-      lua_pushnumber (L, ud->ss[i]);
+      lua_pushnumber (L, ud->skyview[i].ss);
       lua_settable (L, -3);
     }
   }
@@ -250,7 +250,7 @@ LUALIB_API int luaopen_gps (lua_State *L)
   SET_CONST_INT (WATCH_TIMING);
   SET_CONST_INT (WATCH_DEVICE);
   SET_CONST_INT (WATCH_NEWSTYLE);
-  SET_CONST_INT (WATCH_OLDSTYLE);
+  //SET_CONST_INT (WATCH_OLDSTYLE);
 
   SET_CONST_DBL (METERS_TO_FEET);
   SET_CONST_DBL (METERS_TO_MILES);
